@@ -468,23 +468,23 @@ p {
   }
 }
 
-#form-feedback {
+.input-error {
+  color: gray;
+  font-size: 15px;
+  outline: none;
   margin: 0;
-  min-height: 20px;
-  font-size: 0.9rem;
-  text-align: center;
-  opacity: 0;
-  transition: opacity 0.4s ease;
 }
 
-#form-feedback.show {
-  opacity: 1;
-}
-
-#form-feedback.error {
+.error-msg {
   color: #aa4545;
+  font-size: 0.9rem;
+  margin: 0;
 }
 
-#form-feedback.success {
+#form-success {
   color: #4bac60;
+}
+
+#form-error {
+  color: #aa4545;
 }
