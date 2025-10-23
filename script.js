@@ -66,42 +66,99 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /*------------------------------------------------------ form validation*/
 
+
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("contact-form");
-  const feedback = document.getElementById("form-feedback");
+
+  // Select fields
+  const nameInput = document.getElementById("contact-name");
+  const emailInput = document.getElementById("contact-email");
+  const subjectInput = document.getElementById("contact-subject");
+  const messageInput = document.getElementById("contact-message");
+
+  
+  const successMessage = document.getElementById("form-success");
+  const errorMessage = document.getElementById("form-error");
+
+
+  function showError(input, message) {
+    const errorId = input.getAttribute("aria-describedby");
+    const errorElement = document.getElementById(errorId);
+    if (errorElement) {
+      errorElement.textContent = message;
+      errorElement.hidden = false;
+    }
+    input.classList.add("input-error");
+  }
+
+
+  function clearError(input) {
+    const errorId = input.getAttribute("aria-describedby");
+    const errorElement = document.getElementById(errorId);
+    if (errorElement) {
+      errorElement.textContent = "";
+      errorElement.hidden = true;
+    }
+    input.classList.remove("input-error");
+  }
+
+
+  function isValidEmail(email) {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  }
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    feedback.classList.remove("error", "success", "show");
-    feedback.textContent = "";
 
-    const name = document.getElementById("contact-name").value.trim();
-    const email = document.getElementById("contact-email").value.trim();
-    const subject = document.getElementById("contact-subject").value.trim();
-    const message = document.getElementById("contact-message").value.trim();
+    successMessage.hidden = true;
+    errorMessage.hidden = true;
+    [nameInput, emailInput, subjectInput, messageInput].forEach(clearError);
 
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    let isValid = true;
 
-    if (!name) return showFeedback("Please enter your full name.", "error");
-    if (!email)
-      return showFeedback("Please enter your email address.", "error");
-    if (!emailPattern.test(email))
-      return showFeedback("Please enter a valid email address.", "error");
-    if (!subject) return showFeedback("Please enter a subject.", "error");
-    if (!message) return showFeedback("Please enter your message.", "error");
-    if (message.length < 10)
-      return showFeedback(
-        "Your message must be at least 10 characters long.",
-        "error"
-      );
 
-    showFeedback("Your message has been sent successfully!", "success");
+    if (nameInput.value.trim() === "") {
+      showError(nameInput, "Full name is required.");
+      isValid = false;
+    }
+
+
+    if (emailInput.value.trim() === "") {
+      showError(emailInput, "Email is required.");
+      isValid = false;
+    } else if (!isValidEmail(emailInput.value.trim())) {
+      showError(emailInput, "Please enter a valid email address.");
+      isValid = false;
+    }
+
+    if (subjectInput.value.trim() === "") {
+      showError(subjectInput, "Subject is required.");
+      isValid = false;
+    }
+
+
+    if (messageInput.value.trim().length < 10) {
+      showError(messageInput, "Message must be at least 10 characters long.");
+      isValid = false;
+    }
+
+
+    if (!isValid) {
+      errorMessage.hidden = false;
+      errorMessage.focus();
+      return;
+    }
+
+
+    successMessage.hidden = false;
     form.reset();
-  });
 
-  function showFeedback(msg, type) {
-    feedback.textContent = msg;
-    feedback.classList.add(type, "show");
-  }
+
+    setTimeout(() => {
+      successMessage.hidden = true;
+    }, 5000);
+  });
 });

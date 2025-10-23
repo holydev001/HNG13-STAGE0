@@ -28,14 +28,13 @@
           <p data-testid="test-user-time" id="clock"></p>
         </header>
         <h1 class="page-head">Contact Me</h1>
-        <main class="contact-main">
-          <div class="content">
+        <main class="contact-main" data-testid="test-contact-page">
+          <header class="content">
             <h2>Get in touch</h2>
-            <h3>Lets Work together</h3>
-          </div>
+            <h3>Let’s Work Together</h3>
+          </header>
 
           <form id="contact-form" novalidate>
-            <!----------------------------------- Full name -->
             <div class="form-group">
               <label for="contact-name">Full name</label>
               <input
@@ -47,9 +46,16 @@
                 aria-describedby="error-contact-name"
                 required
               />
+              <p
+                id="error-contact-name"
+                data-testid="test-contact-error-name"
+                class="error-msg"
+                hidden
+              >
+                Please enter your full name.
+              </p>
             </div>
 
-            <!----------------------------------------------- Email -->
             <div class="form-group">
               <label for="contact-email">Email</label>
               <input
@@ -61,9 +67,16 @@
                 aria-describedby="error-contact-email"
                 required
               />
+              <p
+                id="error-contact-email"
+                data-testid="test-contact-error-email"
+                class="error-msg"
+                hidden
+              >
+                Please enter a valid email address.
+              </p>
             </div>
 
-            <!------------------------------------------------------ Subject -->
             <div class="form-group">
               <label for="contact-subject">Subject</label>
               <input
@@ -75,9 +88,16 @@
                 aria-describedby="error-contact-subject"
                 required
               />
+              <p
+                id="error-contact-subject"
+                data-testid="test-contact-error-subject"
+                class="error-msg"
+                hidden
+              >
+                Subject is required.
+              </p>
             </div>
 
-            <!-------------------------------------------------------- Message -->
             <div class="form-group">
               <label for="contact-message">Message</label>
               <textarea
@@ -89,9 +109,16 @@
                 aria-describedby="error-contact-message"
                 required
               ></textarea>
+              <p
+                id="error-contact-message"
+                data-testid="test-contact-error-message"
+                class="error-msg"
+                hidden
+              >
+                Message must be at least 10 characters.
+              </p>
             </div>
 
-            <!---------------------------------------------------- Submit -->
             <div class="form-actions">
               <button
                 class="send-btn"
@@ -104,13 +131,25 @@
               </button>
             </div>
 
-            <!---------------------------------------------- Success message -->
             <div
-              id="form-feedback"
+              id="form-success"
               data-testid="test-contact-success"
               role="status"
               aria-live="polite"
-            ></div>
+              hidden
+            >
+              Message sent successfully!
+            </div>
+
+            <div
+              id="form-error"
+              data-testid="test-contact-error"
+              role="alert"
+              aria-live="assertive"
+              hidden
+            >
+              Please fix the errors above and try again.
+            </div>
           </form>
         </main>
       </div>
